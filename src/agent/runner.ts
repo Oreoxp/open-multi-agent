@@ -689,6 +689,13 @@ export class AgentRunner {
     // Per-call abortSignal takes precedence over the static one.
     const effectiveAbortSignal = options.abortSignal ?? this.options.abortSignal
 
+    const callExtraBody = {
+      ...(this.options.extraBody ?? {}),
+      ...(options.runId ? { openmaTraceRunId: options.runId } : {}),
+      ...(options.taskId ? { taskId: options.taskId, openmaTaskId: options.taskId } : {}),
+      ...(options.traceAgent ? { agent: options.traceAgent, openmaAgent: options.traceAgent } : {}),
+    }
+
     const baseChatOptions: LLMChatOptions = {
       model: this.options.model,
       tools: toolDefs.length > 0 ? toolDefs : undefined,
@@ -700,7 +707,7 @@ export class AgentRunner {
       parallelToolCalls: this.options.parallelToolCalls,
       frequencyPenalty: this.options.frequencyPenalty,
       presencePenalty: this.options.presencePenalty,
-      extraBody: this.options.extraBody,
+      extraBody: callExtraBody,
       systemPrompt: this.options.systemPrompt,
       abortSignal: effectiveAbortSignal,
     }

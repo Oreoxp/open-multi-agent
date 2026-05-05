@@ -38,7 +38,7 @@ import type { LLMAdapter } from '../types.js'
  * Additional providers can be integrated by implementing {@link LLMAdapter}
  * directly and bypassing this factory.
  */
-export type SupportedProvider = 'anthropic' | 'azure-openai' | 'bedrock' | 'copilot' | 'deepseek' | 'grok' | 'minimax' | 'openai' | 'gemini' | 'qiniu'
+export type SupportedProvider = 'anthropic' | 'azure-openai' | 'bedrock' | 'copilot' | 'deepseek' | 'grok' | 'minimax' | 'openai' | 'gemini' | 'qiniu' | 'opencrab-codex'
 
 /**
  * Instantiate the appropriate {@link LLMAdapter} for the given provider.
@@ -109,6 +109,16 @@ export async function createAdapter(
     case 'qiniu': {
       const { QiniuAdapter } = await import('./qiniu.js')
       return new QiniuAdapter(apiKey, baseURL)
+    }
+    case 'opencrab-codex': {
+      if (apiKey) {
+        console.warn('[open-multi-agent] apiKey is ignored for the opencrab-codex provider.')
+      }
+      if (baseURL) {
+        console.warn('[open-multi-agent] baseURL is ignored for the opencrab-codex provider.')
+      }
+      const { OpenMaCodexAdapter } = await import('./openma-codex.js')
+      return new OpenMaCodexAdapter()
     }
     case 'azure-openai': {
       // For azure-openai, the `baseURL` parameter serves as the Azure endpoint URL.

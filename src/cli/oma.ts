@@ -56,6 +56,7 @@ const PROVIDER_REFERENCE: ReadonlyArray<{
   { id: 'minimax', apiKeyEnv: ['MINIMAX_API_KEY'], baseUrlSupported: true, notes: 'Global endpoint: https://api.minimax.io/v1 (default). China endpoint: https://api.minimaxi.com/v1. Set MINIMAX_BASE_URL to choose, or pass baseURL in agent config.' },
   { id: 'deepseek', apiKeyEnv: ['DEEPSEEK_API_KEY'], baseUrlSupported: true, notes: 'OpenAI-compatible endpoint at https://api.deepseek.com/v1. Models: deepseek-chat (V3), deepseek-reasoner (thinking).' },
   { id: 'qiniu', apiKeyEnv: ['QINIU_API_KEY'], baseUrlSupported: true, notes: 'OpenAI-compatible endpoint at https://api.qnaigc.com/v1. Set provider to qiniu and choose a model available to your key.' },
+  { id: 'opencrab-codex', apiKeyEnv: [], baseUrlSupported: false, notes: 'OpenCrab sidecar-only provider. Reuses the host Codex CLI / app-server channel via opencrab/codexComplete.' },
   {
     id: 'copilot',
     apiKeyEnv: ['GITHUB_COPILOT_TOKEN', 'GITHUB_TOKEN'],
@@ -289,6 +290,7 @@ const DEFAULT_MODEL_HINT: Record<SupportedProvider, string> = {
   minimax: 'MiniMax-M2.7',
   deepseek: 'deepseek-chat',
   qiniu: 'deepseek-v3',
+  'opencrab-codex': 'codex-default',
   bedrock: 'anthropic.claude-3-5-haiku-20241022-v1:0',
 }
 
